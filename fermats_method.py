@@ -38,26 +38,3 @@ def Fermat_algorithm(N, s_bound):
     return None
 
 
-
-N = 10000004400000259
-
-print(f"N: {N}")
-bounds = [i*1000000 for i in range(1, 100)]
-
-times = []
-
-for s in bounds:
-    start = time.time()
-    factors = Fermat_algorithm(N, s_bound=s)
-    end = time.time()
-    times.append(end - start)
-    print("Factors:", factors)
-    print("Execution Time:", end - start, "sec")
-
-plt.plot(bounds, times)
-plt.title("Execution time Fermat's Algorithm depending on s_bound")
-plt.xlabel("s_bound")
-plt.ylabel("Time")
-plt.grid(True)
-plt.savefig("fermats_runtime.png")
-plt.show()
