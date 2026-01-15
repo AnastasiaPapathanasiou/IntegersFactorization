@@ -1,8 +1,10 @@
-def Quadratic_Sieve(N, B, interval):
-    import math
-    import time
-    from sympy import primerange, isprime, nextprime, factorint, gcd, sqrt
-    import matplotlib.pyplot as plt
+import math
+import time
+from sympy import primerange, isprime, nextprime, factorint, gcd, sqrt
+import matplotlib.pyplot as plt
+
+
+def quadratic_sieve(N, B, interval):
 
     # we create the factor base: a list of small primes up to the bound B
     b_smooth_primes = [-1] + list(primerange(2, B))  # we include -1 in the factor base to handle negative Q(x) values
