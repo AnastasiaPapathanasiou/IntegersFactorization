@@ -37,27 +37,27 @@ with open(csv_path, "w", newline="", encoding="utf-8") as csvfile:
             times.append(exec_time)
 
             print(f"s={s} | time={exec_time:.6f} sec | factors={factors}")
-            writer.writerow([N, s, exec_time, factors])
+            writer.writerow([n, s, exec_time, factors])
 
 # Normal plot
 plt.figure()
 plt.plot(bounds, times, marker="o")
-plt.title(f"Fermat Execution Time (N={N})")
+plt.title(f"Fermat Execution Time (n={n})")
 plt.xlabel("s_bound")
 plt.ylabel("Time (sec)")
 plt.grid(True)
-plt.savefig(f"plots/fermat_N_{N}.png")
+plt.savefig(f"plots/fermat_n_{n}.png")
 plt.close()
 
 # Log scale plot
 plt.figure()
 plt.plot(bounds, times, marker="o")
 plt.yscale("log")
-plt.title(f"Fermat Execution Time – Log Scale (N={N})")
+plt.title(f"Fermat Execution Time – Log Scale (n={n})")
 plt.xlabel("s_bound")
 plt.ylabel("Time (sec, log)")
 plt.grid(True, which="both")
-plt.savefig(f"plots/fermat_N_{N}_log.png")
+plt.savefig(f"plots/fermat_n_{n}_log.png")
 plt.close()
 
 print("\n Finished")
