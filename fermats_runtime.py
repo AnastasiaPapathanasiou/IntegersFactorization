@@ -39,7 +39,7 @@ with open(csv_path, "w", newline="", encoding="utf-8") as csvfile:
             print(f"s={s} | time={exec_time:.6f} sec | factors={factors}")
             writer.writerow([N, s, exec_time, factors])
 
-# Διάγραμμα (normal)
+# Normal plot
 plt.figure()
 plt.plot(bounds, times, marker="o")
 plt.title(f"Fermat Execution Time (N={N})")
@@ -49,7 +49,7 @@ plt.grid(True)
 plt.savefig(f"plots/fermat_N_{N}.png")
 plt.close()
 
-# Διάγραμμα (log scale)
+# Log scale plot
 plt.figure()
 plt.plot(bounds, times, marker="o")
 plt.yscale("log")
