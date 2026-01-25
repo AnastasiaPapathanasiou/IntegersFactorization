@@ -12,9 +12,8 @@ os.makedirs("results", exist_ok=True)
 os.makedirs("plots", exist_ok=True)
 
 ns = [50651849296460476429, 126204041959255639109, 15241498157936126579312244973, 1524157875735101476256211, 15241578753238836750190515, 152415787532388367501905489477, 15241578753238836750190518424398338]
-for n in ns:
-    print(f"n: {n}")
-    bounds = [i*100000000 for i in range(1, 100000)]
+
+bounds = [i*1000000 for i in range(1, 5000)]
 
 # CSV
 csv_path = "results/fermat_results.csv"
@@ -39,25 +38,29 @@ with open(csv_path, "w", newline="", encoding="utf-8") as csvfile:
             print(f"s={s} | time={exec_time:.6f} sec | factors={factors}")
             writer.writerow([n, s, exec_time, factors])
 
-# Normal plot
-plt.figure()
-plt.plot(bounds, times, marker="o")
-plt.title(f"Fermat Execution Time (n={n})")
-plt.xlabel("s_bound")
-plt.ylabel("Time (sec)")
-plt.grid(True)
-plt.savefig(f"plots/fermat_n_{n}.png")
-plt.close()
+            if factors is not None:
+                print(f"Factors found for n={n} at s={s}")
+                break
 
-# Log scale plot
-plt.figure()
-plt.plot(bounds, times, marker="o")
-plt.yscale("log")
-plt.title(f"Fermat Execution Time – Log Scale (n={n})")
-plt.xlabel("s_bound")
-plt.ylabel("Time (sec, log)")
-plt.grid(True, which="both")
-plt.savefig(f"plots/fermat_n_{n}_log.png")
-plt.close()
+        # Normal plot
+        plt.figure()
+        plt.plot(bounds[:len(times)], times, marker="o")
+        plt.title(f"Fermat Execution Time (n={n})")
+        plt.xlabel("s_bound")
+        plt.ylabel("Time (sec)")
+        plt.grid(True)
+        plt.savefig(f"plots/fermat_n_{n}.png")
+        plt.close()
 
-print("\n Finished")
+        # Log scale plot
+        plt.figure()
+        plt.plot(bounds[:len(times)], times, marker="o")
+        plt.yscale("log")
+        plt.title(f"Fermat Execution Time – Log Scale (n={n})")
+        plt.xlabel("s_bound")
+        plt.ylabel("Time (sec, log)")
+        plt.grid(True, which="both")
+        plt.savefig(f"plots/fermat_n_{n}_log.png")
+        plt.close()
+
+        print("\n Finished")
