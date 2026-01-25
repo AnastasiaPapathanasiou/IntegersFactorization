@@ -38,15 +38,12 @@ def quadratic_sieve(n, b, interval):
             # Store exponent parity (even/odd)
             e = fac.get(p, 0) % 2
             row.append(e)
-            exp_matrix.append(row)
-            print(f"x = {x}, exponents mod 2 = {row}")
+        exp_matrix.append(row)
+        print(f"x = {x}, exponents mod 2 = {row}")
 
     # Convert exponent matrix to a NumPy array
     # Reduce everything modulo 2 explicitly
     m = np.array(exp_matrix, dtype=int) % 2
-
-    rows, cols = m.shape
-    print(f"x ={x}, Q(x)= {qx}, factors= {fac}")
 
     # We transpose the matrix so that columns correspond to relations
     # This makes it easier to find dependencies
@@ -98,7 +95,7 @@ def quadratic_sieve(n, b, interval):
         y_val = abs(y_val)  # y_val should be a perfect square
 
         # Check if y_val is a perfect square
-        if not isqrt(y_val):
+        if math.isqrt(y_val) ** 2 != y_val:
             continue
         y_val = math.isqrt(y_val)
         print(f"x: {x_val}, y: {y_val}")
