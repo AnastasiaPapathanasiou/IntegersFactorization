@@ -27,8 +27,9 @@ def quadratic_sieve(n, b, interval):
             smooth_relations.append((x, qx, fac))
     print(f"\nFound {len(smooth_relations)} smooth relations\n")
 
-    if len(smooth_relations) <= len(factor_base):
-        print("Not enough relations — increase B or interval.")
+    # TODO check if this condition is the right one! You have to find a non-empty left kernel of smooth_relations matrix
+    # if len(smooth_relations) <= len(factor_base):
+    #     print("Not enough relations — increase B or interval.")
 
     # Build exponent matrix modulo 2
     exp_matrix = []
@@ -39,7 +40,7 @@ def quadratic_sieve(n, b, interval):
             e = fac.get(p, 0) % 2
             row.append(e)
         exp_matrix.append(row)
-        print(f"x = {x}, exponents mod 2 = {row}")
+        # print(f"x = {x}, exponents mod 2 = {row}")
 
     # Convert exponent matrix to a NumPy array
     # Reduce everything modulo 2 explicitly
