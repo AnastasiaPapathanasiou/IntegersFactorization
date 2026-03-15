@@ -2,22 +2,23 @@ import math
 import numpy as np
 from sympy import primerange, factorint, gcd
 from math import isqrt
+from sympy import jacobi_symbol
 
 
-def quadratic_sieve(n, b, interval):
+def quadratic_sieve(N, b, interval):
     # Create the factor base: small primes up to the bound b
-    factor_base = [-1] + list(primerange(2, b))  # Include -1 in the factor base to handle negative Q(x) values
+    factor_base = [-1] + [p for p in primerange(2, b) if jacobi_symbol(N, p) == 1]  # Include -1 in the factor base to handle negative Q(x) values
     print("Factor base:", factor_base)
 
     # Store (x, q(x), factorization) for b-smooth values
     smooth_relations = []
 
-    x0 = math.isqrt(n)  # Start searching around sqrt(n)
+    x0 = math.isqrt(N)  # Start searching around sqrt(n)
 
     # Loop over values around x0
     for i in range(-interval, interval + 1):
         x = x0 + i
-        qx = x * x - n
+        qx = x * x - N
 
         fac = factorint(qx)  # factor qx into its prime factors
         primes_in_qx = list(fac.keys())
@@ -27,9 +28,6 @@ def quadratic_sieve(n, b, interval):
             smooth_relations.append((x, qx, fac))
     print(f"\nFound {len(smooth_relations)} smooth relations\n")
 
-    # TODO check if this condition is the right one! You have to find a non-empty left kernel of smooth_relations matrix
-    # if len(smooth_relations) <= len(factor_base):
-    #     print("Not enough relations — increase B or interval.")
 
     # Build exponent matrix modulo 2
     exp_matrix = []
@@ -92,7 +90,7 @@ def quadratic_sieve(n, b, interval):
                 # Multiply q(x) values
                 y_val *= smooth_relations[i][1]
 
-        x_val %= n  # Reduce x modulo n
+        x_val %= N  # Reduce x modulo N
         y_val = abs(y_val)  # y_val should be a perfect square
 
         # Check if y_val is a perfect square
@@ -100,14 +98,14 @@ def quadratic_sieve(n, b, interval):
             continue
         y_val = math.isqrt(y_val)
         print(f"x: {x_val}, y: {y_val}")
-        print("gcd:", gcd(x_val + y_val, n), gcd(x_val - y_val, n))
+        print("gcd:", gcd(x_val + y_val, N), gcd(x_val - y_val, N))
 
         # Try to extract a nontrivial factor
-        if 1 < gcd(x_val + y_val, n) < n:
-            print("Factor found:", gcd(x_val + y_val, n), n // gcd(x_val + y_val, n))
-            return gcd(x_val + y_val, n)
-        if 1 < gcd(x_val - y_val, n) < n:
-            print("Factor found:", gcd(x_val - y_val, n), n // gcd(x_val - y_val, n))
+        if 1 < gcd(x_val + y_val, N) < N:
+            print("Factor found:", gcd(x_val + y_val, N), N // gcd(x_val + y_val, N))
+            return gcd(x_val + y_val, N)
+        if 1 < gcd(x_val - y_val, N) < N:
+            print("Factor found:", gcd(x_val - y_val, N), N // gcd(x_val - y_val, N))
             return gcd(x_val - y_val)
 
     # If no factor was found
