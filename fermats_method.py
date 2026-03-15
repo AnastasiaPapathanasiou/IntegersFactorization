@@ -16,21 +16,21 @@ def fermat_algorithm(n, s_bound):
         x0 = x0 + 1  # ceil(sqrt(N))
 
     # Iterate over successive values of x, bounded by s_bound
-    for i in range(s_bound):
+    for s in range(s_bound):
         # Current value of x in the iteration
-        xi = x0 + i
-        yi2 = xi * xi - n
+        xs = x0 + s
+        ys2 = xs * xs - n
 
-        if yi2 >= 0:
-            # Compute the integer square root of yi2
-            y = math.isqrt(yi2)
+        if ys2 >= 0:
+            # Compute the integer square root of ys2
+            y = math.isqrt(ys2)
 
-            # Check whether yi2 ia a perfect square
-            # If y^2 = yi2 then N = (x+y)(x-y)
-            if y * y == yi2:
+            # Check whether ys2 ia a perfect square
+            # If y^2 = ys2 then N = (x+y)(x-y)
+            if y * y == ys2:
                 # Compute the factors of N
-                p = xi + y
-                q = xi - y
+                p = xs + y
+                q = xs - y
 
                 # Return the factorization
                 return p, q
