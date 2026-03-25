@@ -5,7 +5,7 @@ from sympy import Integer
 from fpylll import IntegerMatrix, LLL
 
 
-def coppersmith_method(N, p0, h=4):
+def coppersmith_method(N, p0, h=7):
     # Define a symbolic variable x
     x = sp.Symbol('x')
 
@@ -65,19 +65,12 @@ def coppersmith_method(N, p0, h=4):
         # Recover candidate prime: p = p0 + x0
         p_candidate = p0 + x0
         # Verify factorization
+
+    for x0 in range(-X, X + 1):
+        p_candidate = p0 + x0
         if p_candidate > 1 and N % p_candidate == 0:
             p = p_candidate
             q = N // p
             return int(p), int(q)
 
-    # If no root found via C(x), search for a factor by gcd in [-X, X]
-    print("Searching for factor via gcd in [-X, X]...")
-    for x0 in range(-X, X + 1):
-        p_candidate = p0 + x0
-        if p_candidate > 1 and N % p_candidate == 0:
-            p_factor = p_candidate
-            q_factor = N // p_factor
-            return int(p_factor), int(q_factor)
-
     return None
-
